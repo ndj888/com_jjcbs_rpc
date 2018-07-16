@@ -1,0 +1,16 @@
+{
+    "name": "ndj888/rpc",
+    "description": "rpc swoole laravel",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "longbob",
+            "email": "jjcbs@vip.qq.com"
+        }
+    ],
+    "require": {
+        "ndj888/com_jjcbs_tool" : "v1.*",
+        "guzzlehttp/guzzle" : "6.3.*"
+    }
+}
