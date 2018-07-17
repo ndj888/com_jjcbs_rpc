@@ -75,7 +75,7 @@ class RpcServerImpl implements RpcServerInterface
             , $this->rpcServerConfig->getPort(), SWOOLE_PROCESS, SWOOLE_SOCK_TCP);
         $serv->set([
             'max_request' => $this->rpcServerConfig->getMaxRequest(),
-            'heartbeat_check_interval' => $this->rpcServerConfig->getTcpCheckTime(),
+//            'heartbeat_check_interval' => $this->rpcServerConfig->getTcpCheckTime(),
             'worker_num' => $this->rpcServerConfig->getWorkerNum(),
             'max_conn' => $this->rpcServerConfig->getMaxConn(),
         ]);
