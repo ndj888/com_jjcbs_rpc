@@ -6,13 +6,13 @@
  * Time: 14:31
  */
 
-namespace ext\interfaces;
+namespace src\interfaces;
 
 
 /**
  * 响应数据接口
  * Interface ResponseData
- * @package ext\interfaces
+ * @package src\interfaces
  */
 interface ResponseData
 {

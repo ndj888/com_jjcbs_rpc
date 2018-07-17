@@ -6,7 +6,7 @@
  * Time: 15:42
  */
 
-namespace ext\bean\msg;
+namespace src\bean\msg;
 
 
 use com_jjcbs\lib\SimpleRpc;
@@ -14,7 +14,7 @@ use com_jjcbs\lib\SimpleRpc;
 /**
  * 发送请求数据
  * Class RequestRpcBean
- * @package ext\bean\msg
+ * @package src\bean\msg
  */
 class RequestRpcBean extends SimpleRpc
 {

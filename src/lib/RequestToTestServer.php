@@ -6,7 +6,7 @@
  * Time: 16:12
  */
 
-namespace ext\lib;
+namespace src\lib;
 
 
 class RequestToTestServer extends RpcHttpClient

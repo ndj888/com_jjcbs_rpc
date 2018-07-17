@@ -6,31 +6,29 @@
  * Time: 14:59
  */
 
-namespace ext\lib;
+namespace src\lib;
 
+
+use src\bean\msg\ResponseDataMsg;
 
 class ResponseMessage
 {
-    private static $msg = [
-        'code' => 100,
-        'msg' => '',
-        'data' => [],
-        'result' => 0
-    ];
 
-    public static function succeed(array $data =[] , string $msg = '' , int $code = 200){
-        self::$msg['code'] = $code;
-        self::$msg['result'] = 1;
-        self::$msg['msg'] = $msg;
-        self::$msg['data'] = $data;
-        return self::$msg;
+    public static function succeed(string $eventName , array $data =[] , string $msg = '') : ResponseDataMsg {
+        $data['msg'] = $msg;
+        return new ResponseDataMsg([
+            'eventName' => $eventName,
+            'data' => $data,
+            'code' => 1
+        ]);
     }
 
-    public static function error(string $msg = ''  ,array $data = [] , int $code = 100){
-        self::$msg['code'] = $code;
-        self::$msg['result'] = 0;
-        self::$msg['msg'] = $msg;
-        self::$msg['data'] = $data;
-        return self::$msg;
+    public static function error(string $eventName , string $msg = ''  ,array $data = []) : ResponseDataMsg {
+        $data['msg'] = $msg;
+        return new ResponseDataMsg([
+            'eventName' => $eventName,
+            'data' => $data,
+            'code' => 0
+        ]);
     }
 }

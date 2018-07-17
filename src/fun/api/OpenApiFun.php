@@ -6,17 +6,17 @@
  * Time: 17:40
  */
 
-namespace ext\fun;
+namespace src\fun;
 use com_jjcbs\lib\ServiceFactory;
-use ext\lib\RequestToOpenApi;
-use ext\lib\RequestToTestServer;
-use ext\service\OpenApiService;
+use src\lib\RequestToOpenApi;
+use src\lib\RequestToTestServer;
+use src\service\OpenApiService;
 use Illuminate\Support\Facades\Log;
 
 /**
  * OpenApi 快速调用方法
  * Class OpenApiFun
- * @package ext\fun
+ * @package src\fun
  */
 class OpenApiFun
 {

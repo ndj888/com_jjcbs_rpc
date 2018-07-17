@@ -6,7 +6,7 @@
  * Time: 11:29
  */
 
-namespace ext\fun;
+namespace src\fun;
 
 
 class Tool

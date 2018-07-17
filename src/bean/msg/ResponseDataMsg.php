@@ -6,7 +6,7 @@
  * Time: 15:23
  */
 
-namespace ext\bean\msg;
+namespace src\bean\msg;
 
 
 use com_jjcbs\lib\SimpleRpc;
@@ -14,7 +14,7 @@ use com_jjcbs\lib\SimpleRpc;
 /**
  * 响应消息报文规范
  * Class ResponseDataMsg
- * @package ext\bean\msg
+ * @package src\bean\msg
  */
 class ResponseDataMsg extends SimpleRpc
 {

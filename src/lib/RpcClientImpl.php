@@ -6,17 +6,17 @@
  * Time: 16:42
  */
 
-namespace ext\lib;
+namespace src\lib;
 
 
-use ext\bean\Ipv4Address;
-use ext\bean\msg\RequestDataMsg;
-use ext\bean\msg\ResponseDataMsg;
-use ext\bean\RpcClientConfig;
-use ext\bean\ServerInfo;
-use ext\interfaces\RequestData;
-use ext\interfaces\ResponseData;
-use ext\interfaces\RpcClientInterface;
+use src\bean\Ipv4Address;
+use src\bean\msg\RequestDataMsg;
+use src\bean\msg\ResponseDataMsg;
+use src\bean\RpcClientConfig;
+use src\bean\ServerInfo;
+use src\interfaces\RequestData;
+use src\interfaces\ResponseData;
+use src\interfaces\RpcClientInterface;
 
 class RpcClientImpl implements RpcClientInterface
 {

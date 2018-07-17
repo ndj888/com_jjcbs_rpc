@@ -6,20 +6,20 @@
  * Time: 15:04
  */
 
-namespace ext\lib;
+namespace src\lib;
 
-use ext\bean\Ipv4Address;
-use ext\bean\msg\RequestDataMsg;
-use ext\bean\msg\ResponseDataMsg;
-use ext\bean\RpcServerConfig;
-use ext\bean\ServerInfo;
-use ext\fun\Tool;
-use ext\interfaces\RpcServerInterface;
+use src\bean\Ipv4Address;
+use src\bean\msg\RequestDataMsg;
+use src\bean\msg\ResponseDataMsg;
+use src\bean\RpcServerConfig;
+use src\bean\ServerInfo;
+use src\fun\Tool;
+use src\interfaces\RpcServerInterface;
 
 /**
  * Rpc server 端实现
  * Class RpcServerImpl
- * @package ext\lib
+ * @package src\lib
  */
 class RpcServerImpl implements RpcServerInterface
 {
@@ -35,17 +35,11 @@ class RpcServerImpl implements RpcServerInterface
      * @var \Swoole\Table
      */
     protected $serverTable;
+    /**
+     * @var \Swoole\Table
+     */
+    protected $serverNameIndexArr;
 
-    /**
-     * [serverName1 = > [0 , 1] , serverName2 => [0,1]]
-     * @var array
-     */
-    protected $serverNameIndexArr = [];
-    /**
-     * [$fd1 => $serverName1]
-     * @var array
-     */
-    protected $fdServerInfo = [];
 
 
     public function getConfig(): RpcServerConfig
@@ -69,7 +63,11 @@ class RpcServerImpl implements RpcServerInterface
         $this->serverTable->column('serverName' , \swoole_table::TYPE_STRING , 32);
         $this->serverTable->column('address' , \swoole_table::TYPE_STRING , 2048);
         $this->serverTable->column('status' , \swoole_table::TYPE_INT);
-        if ( ! $this->serverTable->create()){
+        $this->serverTable->column('fd' , \swoole_table::TYPE_INT);
+        // set serverNameIndexTable
+        $this->serverNameIndexArr =  new \Swoole\Table($this->rpcServerConfig->getMaxServerMapSize());
+        $this->serverNameIndexArr->column('index' , \swoole_table::TYPE_STRING , 5096);
+        if ( ! $this->serverTable->create() || !$this->serverNameIndexArr->create()){
             echo '内存表创建失败';
             die;
         }
@@ -88,12 +86,13 @@ class RpcServerImpl implements RpcServerInterface
                 $raw = new RequestDataMsg(\json_decode($data , true));
                 switch ($raw->getEventName()) {
                     case 'register':
-                        $body = new ServerInfo($raw->getData());
                         $index = $fd;
-                        if ( empty($this->serverNameIndexArr[$body->getServerName()] )) $this->serverNameIndexArr[$body->getServerName()] = [];
-                        array_push($this->serverNameIndexArr[$body->getServerName()] , $index);
-                        $this->fdServerInfo[$fd] = $body;
-                        $signKey = md5($body->getServerName() . $index);
+                        $tempArr = $raw->getData();
+                        $tempArr['fd'] = $index;
+                        $body = new ServerInfo($tempArr);
+
+                        $this->serverNameIndexArrPush($body->getServerName() , $index);
+                        $signKey = $body->getServerName() . $index;
                         if ($this->serverTable->get($signKey) == false) {
                             // key not exist
                             // set info to table
@@ -102,37 +101,31 @@ class RpcServerImpl implements RpcServerInterface
                             $this->serverTable->set($signKey, $d);
                         }
                         //response
-                        $serv->send($fd , json_encode(ResponseMessage::succeed([] , 'register succeed')));
+                        $serv->send($fd , ResponseMessage::succeed('register' , [] , 'register succeed')->toJson());
                         break;
                     case 'unRegister':
                         $body = new ServerInfo($raw->getData());
-                        $serverKey = md5($body->getServerName());
-                        $this->unRegister($this->getServerTableData($serverKey));
-                        $serv->send(json_encode(ResponseMessage::succeed([] , 'unregister succeed')));
+                        $serverKey = $body->getServerName() . $fd;
+                        $this->unRegister($this->getServerTableData($serverKey) , $fd);
+                        $serv->send(ResponseMessage::succeed('unRegister' , [] , 'unregister succeed')->toJson());
                         break;
                     /**
                      * DNS 查询
                      */
                     case 'selectDns' :
                         $sn = $raw->getData()['serverName'];
-                        if ( !array_key_exists($sn , $this->serverNameIndexArr)){
-                            throw new \Exception('server not found');
-                        }
-                        $data = $this->getServerTableData(md5($sn . $this->dnsSelect($this->serverNameIndexArr[$sn])));
-                        $serv->send($fd , \json_encode($data->toJson()));
+                        $arr = $this->getServerNameIndexArr($sn);
+                        $data = $this->getServerTableData($sn . $this->dnsSelect($arr));
+                        $serv->send($fd , ResponseMessage::succeed('selectDns' , $data->toArray())->toJson());
                         break;
                     default:
-                        $msg = new ResponseDataMsg([
-                            'eventName' => 'noNone',
-                            'data' => ['msg' => 'not found event name']
-                        ]);
-                        $serv->send($fd, $msg->toJson());
+                        $serv->send($fd, ResponseMessage::error('noNone' , 'not found')->toJson());
                         break;
                 }
             } catch (\Exception $e) {
                 $errMsg = 'error: ' . $e->getMessage() . "\n";
                 echo $errMsg;
-                $serv->send($fd , $errMsg);
+                $serv->send($fd , ResponseMessage::error('error' , $errMsg)->toJson());
                 $serv->close($fd);
             }
         });
@@ -140,7 +133,7 @@ class RpcServerImpl implements RpcServerInterface
         $serv->on('close', function ($serv, $fd) {
             echo 'Client-Close.\n';
             try {
-                if ( array_key_exists($fd , $this->fdServerInfo)) $this->unRegister($this->fdServerInfo[$fd]);
+                $this->unRegister($this->getServerTableData($this->findServerNameByFd($fd) . $fd) , $fd);
             } catch (\Exception $e) {
                 echo 'close error ' . $e->getMessage();
             } finally {
@@ -155,20 +148,15 @@ class RpcServerImpl implements RpcServerInterface
     /**
      * 注销当前服务
      * @param ServerInfo $info
+     * @param  int $fd
+     * @throws \Exception
      */
-    private function unRegister(ServerInfo $info)
+    private function unRegister(ServerInfo $info , int $fd)
     {
         $serverName = $info->getServerName();
-        $indexArr = $this->serverNameIndexArr[$serverName];
-        foreach ($indexArr as $i) {
-            $signKey = md5($serverName . $i);
-            $body = $this->getServerTableData($signKey);
-            if ($body->getAddress()->getPort() == $info->getAddress()->getPort() && $body->getAddress()->getIp() == $info->getAddress()->getIp()) {
-                // found
-                $this->serverTable->del($signKey);
-                break;
-            }
-        }
+        // del the fd
+        $this->serverTable->del($serverName . $fd);
+        $this->serverNameIndexArrDel($serverName , $fd);
     }
 
 
@@ -187,6 +175,51 @@ class RpcServerImpl implements RpcServerInterface
         $serverInfo = new ServerInfo($arr);
         $serverInfo->setAddress(new Ipv4Address(\json_decode($arr['address'] , true)));
         return $serverInfo;
+    }
+
+    private function getServerNameIndexArr(string $name) : array {
+        $d = [];
+        if ( $this->serverNameIndexArr->exist($name)){
+            $d = json_decode($this->serverNameIndexArr->get($name)['index'] ?? '{}'  , true);
+        }
+        return $d;
+    }
+
+    private function serverNameIndexArrPush(string $key , int $i){
+        $arr = $this->getServerNameIndexArr($key);
+        array_push($arr , $i);
+        $this->serverNameIndexArrSet($key , $arr);
+    }
+
+    /**
+     * 从数组中删除指定值
+     * @param string $key
+     * @param int $v
+     */
+    private function serverNameIndexArrDel(string $key , int $v){
+        $arr = $this->getServerNameIndexArr($key);
+        $i = array_search($v , $arr );
+        if ( $i !== false){
+            unset($arr[$i]);
+        }
+        $this->serverNameIndexArrSet($key , $arr);
+
+    }
+
+    private function serverNameIndexArrSet(string $key , array $arr = []){
+        $this->serverNameIndexArr->set($key , ['index' => json_encode($arr , true)]);
+    }
+
+    /**
+     * 通过 fd 查找 serverName
+     * @param int $fd
+     * @return string
+     */
+    private function findServerNameByFd(int $fd = 0) : string {
+        foreach ($this->serverTable as $v){
+            if ( $v['fd'] == $fd ) return $v['serverName'];
+        }
+        return '';
     }
 
 }

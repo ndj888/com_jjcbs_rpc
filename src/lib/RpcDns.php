@@ -6,15 +6,15 @@
  * Time: 15:32
  */
 
-namespace ext\lib;
+namespace src\lib;
 use com_jjcbs\lib\Service;
-use ext\bean\msg\ResponseDataMsg;
-use ext\bean\ServerInfo;
+use src\bean\msg\ResponseDataMsg;
+use src\bean\ServerInfo;
 
 /**
  * 负责解析dns
  * Class RpcDns
- * @package ext\lib
+ * @package src\lib
  */
 class RpcDns extends Service
 {

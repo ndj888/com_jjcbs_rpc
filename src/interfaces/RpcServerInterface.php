@@ -6,15 +6,15 @@
  * Time: 14:34
  */
 
-namespace ext\interfaces;
+namespace src\interfaces;
 
-use ext\bean\RpcServerConfig;
+use src\bean\RpcServerConfig;
 
 
 /**
  * RPC server 中心
  * Interface RpcServerInterface
- * @package ext\interfaces
+ * @package src\interfaces
  */
 interface RpcServerInterface
 {

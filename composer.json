@@ -12,5 +12,10 @@
     "require": {
         "ndj888/com_jjcbs_tool" : "v1.*",
         "guzzlehttp/guzzle" : "6.3.*"
+    },
+    "autoload" : {
+        "psr-4" : {
+            "src\\" : "src/"
+        }
     }
 }

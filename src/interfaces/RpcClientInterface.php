@@ -6,14 +6,14 @@
  * Time: 14:01
  */
 
-namespace ext\interfaces;
-use ext\bean\Ipv4Address;
-use ext\bean\ServerInfo;
+namespace src\interfaces;
+use src\bean\Ipv4Address;
+use src\bean\ServerInfo;
 
 /**
  * 内部通信rpc
  * Interface RpcClientInterface
- * @package ext\interfaces
+ * @package src\interfaces
  */
 interface RpcClientInterface
 {

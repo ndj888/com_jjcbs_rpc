@@ -6,7 +6,7 @@
  * Time: 14:17
  */
 
-namespace ext\bean;
+namespace src\bean;
 
 
 use com_jjcbs\lib\SimpleRpc;
@@ -14,7 +14,7 @@ use com_jjcbs\lib\SimpleRpc;
 /**
  * 服务信息
  * Class ServerInfo
- * @package ext\bean
+ * @package src\bean
  */
 class ServerInfo extends SimpleRpc
 {
@@ -28,6 +28,11 @@ class ServerInfo extends SimpleRpc
      * @var int
      */
     protected $status = 1;
+    /**
+     * 通信标识
+     * @var int
+     */
+    protected $fd = 0;
 
     /**
      * @return string
@@ -77,6 +82,24 @@ class ServerInfo extends SimpleRpc
     {
         $this->status = $status;
     }
+
+    /**
+     * @return int
+     */
+    public function getFd(): int
+    {
+        return $this->fd;
+    }
+
+    /**
+     * @param int $fd
+     */
+    public function setFd(int $fd): void
+    {
+        $this->fd = $fd;
+    }
+
+
 
 
 }

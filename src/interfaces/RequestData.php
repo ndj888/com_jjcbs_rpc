@@ -6,12 +6,12 @@
  * Time: 14:22
  */
 
-namespace ext\interfaces;
+namespace src\interfaces;
 
 /**
  * 请求数据接口
  * Interface RequestData
- * @package ext\interfaces
+ * @package src\interfaces
  */
 interface RequestData
 {

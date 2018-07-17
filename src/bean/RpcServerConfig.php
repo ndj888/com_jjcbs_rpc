@@ -6,14 +6,14 @@
  * Time: 14:35
  */
 
-namespace ext\bean;
+namespace src\bean;
 
 use com_jjcbs\lib\SimpleRpc;
 
 
 /**
  * Class RpcServerConfig
- * @package ext\bean
+ * @package src\bean
  */
 class RpcServerConfig extends SimpleRpc
 {
