@@ -8,6 +8,8 @@
 
 namespace src\interfaces;
 use src\bean\Ipv4Address;
+use src\bean\msg\RequestDataMsg;
+use src\bean\msg\ResponseDataMsg;
 use src\bean\ServerInfo;
 
 /**
@@ -23,7 +25,7 @@ interface RpcClientInterface
      * @param ServerInfo $serverInfo
      * @return bool
      */
-    public function register(serverInfo $serverInfo) : bool;
+    public function register() : bool;
 
     /**
      * 向服务管理中心注销一个服务
@@ -43,8 +45,8 @@ interface RpcClientInterface
 
     /**
      * 异步
-     * @param RequestData $requestData
+     * @param RequestDataMsg $requestData
      * @return ResponseData
      */
-    public function sendRequest(RequestData $requestData) : ResponseData;
+    public function sendRequest(RequestDataMsg $requestData) : ResponseDataMsg;
 }
