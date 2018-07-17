@@ -20,7 +20,7 @@ class RpcDns extends Service
 {
     /**
      * Dns tcp client
-     * @var \swoole_client
+     * @var RpcClientImpl
      */
     private $client = null;
     public function __construct($client)
@@ -34,21 +34,7 @@ class RpcDns extends Service
     }
 
     public function parseDns(string $serverName) : ServerInfo{
-        $this->client->send((new ResponseDataMsg([
-            'eventName' => 'selectDns',
-            'data' => [
-                'serverName' => $serverName
-            ]
-        ]))->toJson());
-        $bf = $this->client->recv();
-        $res = new ResponseDataMsg(json_decode($bf , true));
-        if ( $res->getResult() != 1) throw new \Exception('dns parse error');
-        return new ServerInfo($res->getData());
-    }
-    public function __destruct()
-    {
-        // TODO: Implement __destruct() method.
-        $this->client->close();
+        return new ServerInfo($this->client->dnsNameParse($serverName));
     }
 
 }

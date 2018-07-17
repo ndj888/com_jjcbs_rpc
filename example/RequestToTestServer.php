@@ -12,7 +12,7 @@ namespace src\lib;
 class RequestToTestServer extends RpcHttpClient
 {
     protected $apiMap = [
-        'testHi' => '/api/testHi'
+        'test' => '/api/test'
     ];
-    protected $serverName = 'testServer';
+    protected $serverName = 'testApp';
 }

@@ -12,9 +12,9 @@ namespace src\lib;
 use com_jjcbs\lib\Service;
 use com_jjcbs\lib\ServiceFactory;
 use src\bean\msg\RequestRpcBean;
-use src\bean\msg\ResponseDataMsg;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
+use src\bean\msg\ServiceResponseBean;
 
 /**
  * RPC 通信实现
@@ -39,10 +39,10 @@ abstract class RpcHttpClient extends Service
 
     protected $apiMap = [];
 
-    public function __construct()
+    public function __construct(RpcClientImpl $client)
     {
         $this->httpClient = new Client();
-        $this->dnsService = ServiceFactory::getInstance(RpcDns::class);
+        $this->dnsService = ServiceFactory::getInstance(RpcDns::class ,[$client]);
     }
 
     public function exec()
@@ -55,20 +55,21 @@ abstract class RpcHttpClient extends Service
      * @param RequestRpcBean $request
      * @param string $fullUrl
      */
-    public function send(string $fullUrl, RequestRpcBean $request) : ResponseDataMsg
+    public function send(string $fullUrl, RequestRpcBean $request) : ServiceResponseBean
     {
         $requestData = [
             'headers' => $request->getHeader(),
-            'body' => $request->getBody()
+            'data' => $request->getBody()
         ];
         try {
             $req = $this->httpClient->request($request->getMethod(), $fullUrl, $requestData);
             $res = $req->getBody()->getContents();
-            return new ResponseDataMsg(\json_decode($res, true));
+            return new ServiceResponseBean(\json_decode($res, true));
         } catch (\Exception $e) {
-            $error = 'request api error';
+            $error = 'request api error' . $e->getMessage();
+//            echo $error;
             Log::error($error);
-            return $error;
+//            return $error;
         }
 
     }

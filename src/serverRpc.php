@@ -13,8 +13,6 @@ $serverConfig->setIsDaemon(false);
 $serverConfig->setMaxServerMapSize(2048);
 $serverConfig->setListen('0.0.0.0');
 $serverConfig->setPort(8881);
-$serverConfig->setReactorNum(\swoole_cpu_num() * 2);
-$serverConfig->setWorkerNum(\swoole_cpu_num() * 2);
 $server = new \src\lib\RpcServerImpl();
 $server->setConfig($serverConfig);
 try{

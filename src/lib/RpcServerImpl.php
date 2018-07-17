@@ -73,12 +73,6 @@ class RpcServerImpl implements RpcServerInterface
         }
         $serv = new \Swoole\Server($this->rpcServerConfig->getListen()
             , $this->rpcServerConfig->getPort(), SWOOLE_PROCESS, SWOOLE_SOCK_TCP);
-        $serv->set([
-            'max_request' => $this->rpcServerConfig->getMaxRequest(),
-//            'heartbeat_check_interval' => $this->rpcServerConfig->getTcpCheckTime(),
-            'worker_num' => $this->rpcServerConfig->getWorkerNum(),
-            'max_conn' => $this->rpcServerConfig->getMaxConn(),
-        ]);
 
         // 建立连接
         $serv->on('connect', function ($serv, $fd) {
@@ -172,7 +166,7 @@ class RpcServerImpl implements RpcServerInterface
      * @return mixed
      */
     private function dnsSelect(array $arr){
-        return empty($arr) ? [] : $arr[array_rand($arr)];
+        return $arr[array_rand($arr)];
     }
 
     private function getServerTableData(string $signKey) : ServerInfo {
