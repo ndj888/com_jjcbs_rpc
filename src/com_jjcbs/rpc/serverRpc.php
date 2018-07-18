@@ -7,13 +7,13 @@
  */
 
 // server rpc test
-require '../vendor/autoload.php';
-$serverConfig = new \src\bean\RpcServerConfig();
+require '../../../vendor/autoload.php';
+$serverConfig = new \com_jjcbs\rpc\bean\RpcServerConfig();
 $serverConfig->setIsDaemon(false);
 $serverConfig->setMaxServerMapSize(2048);
 $serverConfig->setListen('0.0.0.0');
 $serverConfig->setPort(8881);
-$server = new \src\lib\RpcServerImpl();
+$server = new \com_jjcbs\rpc\lib\RpcServerImpl();
 $server->setConfig($serverConfig);
 try{
     echo '服务管理-------启动';

@@ -6,20 +6,20 @@
  * Time: 15:04
  */
 
-namespace src\lib;
+namespace com_jjcbs\rpc\lib;
 
-use src\bean\Ipv4Address;
-use src\bean\msg\RequestDataMsg;
-use src\bean\msg\ResponseDataMsg;
-use src\bean\RpcServerConfig;
-use src\bean\ServerInfo;
-use src\fun\Tool;
-use src\interfaces\RpcServerInterface;
+use com_jjcbs\rpc\bean\Ipv4Address;
+use com_jjcbs\rpc\bean\msg\RequestDataMsg;
+use com_jjcbs\rpc\bean\msg\ResponseDataMsg;
+use com_jjcbs\rpc\bean\RpcServerConfig;
+use com_jjcbs\rpc\bean\ServerInfo;
+use com_jjcbs\rpc\fun\Tool;
+use com_jjcbs\rpc\interfaces\RpcServerInterface;
 
 /**
  * Rpc server 端实现
  * Class RpcServerImpl
- * @package src\lib
+ * @package com_jjcbs\rpc\lib
  */
 class RpcServerImpl implements RpcServerInterface
 {

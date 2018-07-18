@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f62e9a9cdcf2aa368583056a9ee4d2ac",
+    "content-hash": "3d72551f0d4d0e13af4bbeae28562506",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -189,16 +189,16 @@
         },
         {
             "name": "ndj888/com_jjcbs_tool",
-            "version": "v1.16",
+            "version": "v1.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ndj888/com_jjcbs_tool.git",
-                "reference": "74afaecc8cd76e51c4603013bad02dbc99c9a02f"
+                "reference": "00d026e42951641168a162690be237ceef034e92"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ndj888/com_jjcbs_tool/zipball/74afaecc8cd76e51c4603013bad02dbc99c9a02f",
-                "reference": "74afaecc8cd76e51c4603013bad02dbc99c9a02f",
+                "url": "https://api.github.com/repos/ndj888/com_jjcbs_tool/zipball/00d026e42951641168a162690be237ceef034e92",
+                "reference": "00d026e42951641168a162690be237ceef034e92",
                 "shasum": ""
             },
             "require": {
@@ -231,7 +231,7 @@
                 "com_jjcbs",
                 "mytool"
             ],
-            "time": "2018-07-13T06:04:11+00:00"
+            "time": "2017-12-02T04:18:45+00:00"
         },
         {
             "name": "psr/http-message",
@@ -290,6 +290,8 @@
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": "^7.1"
+    },
     "platform-dev": []
 }

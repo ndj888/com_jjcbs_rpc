@@ -6,14 +6,14 @@
  * Time: 15:20
  */
 
-namespace src\bean\msg;
+namespace com_jjcbs\rpc\bean\msg;
 use com_jjcbs\lib\SimpleRpc;
 
 
 /**
  * 发送消息规范,消息应该是该对象转为json
  * Class RequestDataMsg
- * @package src\bean\msg
+ * @package com_jjcbs\rpc\bean\msg
  */
 class RequestDataMsg extends SimpleRpc
 {

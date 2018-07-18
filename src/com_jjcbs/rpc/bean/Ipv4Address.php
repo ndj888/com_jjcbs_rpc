@@ -6,14 +6,14 @@
  * Time: 14:15
  */
 
-namespace src\bean;
+namespace com_jjcbs\rpc\bean;
 use com_jjcbs\lib\SimpleRpc;
 
 
 /**
  * 描述一个iPV4地址
  * Class Ipv4Address
- * @package src\bean
+ * @package com_jjcbs\rpc\bean
  */
 class Ipv4Address extends SimpleRpc
 {

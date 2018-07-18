@@ -2,44 +2,57 @@
 /**
  * Created by PhpStorm.
  * User: longbob
- * Date: 2018/7/12 0012
- * Time: 15:23
+ * Date: 2018/7/18
+ * Time: 上午3:19
  */
 
-namespace src\bean\msg;
+namespace com_jjcbs\rpc\bean\msg;
 
 
 use com_jjcbs\lib\SimpleRpc;
 
 /**
- * 响应消息报文规范
- * Class ResponseDataMsg
- * @package src\bean\msg
+ * 业务响应对象
+ * Class ServiceResponseBean
+ * @package com_jjcbs\rpc\bean\msg
  */
-class ResponseDataMsg extends SimpleRpc
+class ServiceResponseBean extends SimpleRpc
 {
-    protected $eventName;
+    protected $code = 0;
+    protected $msg = '';
     protected $data = [];
-    /**
-     * 1 为成功 其它为失败
-     * @var int
-     */
     protected $result = 1;
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getEventName()
+    public function getCode(): int
     {
-        return $this->eventName;
+        return $this->code;
     }
 
     /**
-     * @param mixed $eventName
+     * @param int $code
      */
-    public function setEventName($eventName): void
+    public function setCode(int $code): void
     {
-        $this->eventName = $eventName;
+        $this->code = $code;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMsg(): string
+    {
+        return $this->msg;
+    }
+
+    /**
+     * @param string $msg
+     */
+    public function setMsg(string $msg): void
+    {
+        $this->msg = $msg;
     }
 
     /**

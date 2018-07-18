@@ -6,7 +6,7 @@
  * Time: 11:29
  */
 
-namespace src\fun;
+namespace com_jjcbs\rpc\fun;
 
 
 class Tool

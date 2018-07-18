@@ -6,18 +6,18 @@
  * Time: 17:40
  */
 
-namespace src\fun\api;
+namespace com_jjcbs\rpc\fun\api;
 use com_jjcbs\lib\ServiceFactory;
-use src\lib\RequestToOpenApi;
-use src\lib\RequestToTestServer;
-use src\lib\RpcHttpClient;
-use src\service\OpenApiService;
+use com_jjcbs\rpc\lib\RequestToOpenApi;
+use com_jjcbs\rpc\lib\RequestToTestServer;
+use com_jjcbs\rpc\lib\RpcHttpClient;
+use com_jjcbs\rpc\service\OpenApiService;
 use Illuminate\Support\Facades\Log;
 
 /**
  * OpenApi 快速调用方法
  * Class OpenApiFun
- * @package src\fun
+ * @package com_jjcbs\rpc\fun
  */
 abstract class OpenApiFun
 {

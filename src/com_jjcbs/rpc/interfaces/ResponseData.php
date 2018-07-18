@@ -6,13 +6,13 @@
  * Time: 14:31
  */
 
-namespace src\interfaces;
+namespace com_jjcbs\rpc\interfaces;
 
 
 /**
  * 响应数据接口
  * Interface ResponseData
- * @package src\interfaces
+ * @package com_jjcbs\rpc\interfaces
  */
 interface ResponseData
 {

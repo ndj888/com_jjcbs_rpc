@@ -6,16 +6,16 @@
  * Time: 14:01
  */
 
-namespace src\interfaces;
-use src\bean\Ipv4Address;
-use src\bean\msg\RequestDataMsg;
-use src\bean\msg\ResponseDataMsg;
-use src\bean\ServerInfo;
+namespace com_jjcbs\rpc\interfaces;
+use com_jjcbs\rpc\bean\Ipv4Address;
+use com_jjcbs\rpc\bean\msg\RequestDataMsg;
+use com_jjcbs\rpc\bean\msg\ResponseDataMsg;
+use com_jjcbs\rpc\bean\ServerInfo;
 
 /**
  * 内部通信rpc
  * Interface RpcClientInterface
- * @package src\interfaces
+ * @package com_jjcbs\rpc\interfaces
  */
 interface RpcClientInterface
 {

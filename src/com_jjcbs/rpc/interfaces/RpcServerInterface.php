@@ -6,15 +6,15 @@
  * Time: 14:34
  */
 
-namespace src\interfaces;
+namespace com_jjcbs\rpc\interfaces;
 
-use src\bean\RpcServerConfig;
+use com_jjcbs\rpc\bean\RpcServerConfig;
 
 
 /**
  * RPC server 中心
  * Interface RpcServerInterface
- * @package src\interfaces
+ * @package com_jjcbs\rpc\interfaces
  */
 interface RpcServerInterface
 {

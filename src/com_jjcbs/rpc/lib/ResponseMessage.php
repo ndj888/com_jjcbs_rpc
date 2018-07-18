@@ -6,10 +6,10 @@
  * Time: 14:59
  */
 
-namespace src\lib;
+namespace com_jjcbs\rpc\lib;
 
 
-use src\bean\msg\ResponseDataMsg;
+use com_jjcbs\rpc\bean\msg\ResponseDataMsg;
 
 class ResponseMessage
 {

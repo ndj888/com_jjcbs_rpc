@@ -6,20 +6,20 @@
  * Time: 14:31
  */
 
-namespace src\lib;
+namespace com_jjcbs\rpc\lib;
 
 
 use com_jjcbs\lib\Service;
 use com_jjcbs\lib\ServiceFactory;
-use src\bean\msg\RequestRpcBean;
+use com_jjcbs\rpc\bean\msg\RequestRpcBean;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
-use src\bean\msg\ServiceResponseBean;
+use com_jjcbs\rpc\bean\msg\ServiceResponseBean;
 
 /**
  * RPC 通信实现
  * Class RpcHttpClient
- * @package src\lib
+ * @package com_jjcbs\rpc\lib
  */
 abstract class RpcHttpClient extends Service
 {

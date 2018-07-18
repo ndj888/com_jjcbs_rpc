@@ -6,14 +6,14 @@
  * Time: 16:39
  */
 
-namespace src\service;
+namespace com_jjcbs\rpc\service;
 
 
 use com_jjcbs\lib\Service;
 
 /**
  * Class TcpDnsServer
- * @package src\service
+ * @package com_jjcbs\rpc\service
  */
 class TcpDnsServer extends Service
 {

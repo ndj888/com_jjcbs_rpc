@@ -6,7 +6,7 @@
  * Time: 14:17
  */
 
-namespace src\bean;
+namespace com_jjcbs\rpc\bean;
 
 
 use com_jjcbs\lib\SimpleRpc;
@@ -14,7 +14,7 @@ use com_jjcbs\lib\SimpleRpc;
 /**
  * 服务信息
  * Class ServerInfo
- * @package src\bean
+ * @package com_jjcbs\rpc\bean
  */
 class ServerInfo extends SimpleRpc
 {

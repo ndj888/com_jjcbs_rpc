@@ -1,6 +1,7 @@
 {
     "name": "ndj888/rpc",
     "description": "rpc swoole laravel",
+    "keywords": ["rpc","com_jjcbs"],
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -10,12 +11,13 @@
         }
     ],
     "require": {
+        "php" : "^7.1",
         "ndj888/com_jjcbs_tool" : "v1.*",
         "guzzlehttp/guzzle" : "6.3.*"
     },
     "autoload" : {
         "psr-4" : {
-            "src\\" : "src/"
+            "com_jjcbs\\" : "src/com_jjcbs/"
         }
     }
 }
