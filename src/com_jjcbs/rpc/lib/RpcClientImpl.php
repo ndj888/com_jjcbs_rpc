@@ -29,7 +29,7 @@ class RpcClientImpl implements RpcClientInterface
     /**
      * @var \swoole_client
      */
-    private $client;
+    private static $client;
 
     /**
      * @param RpcClientConfig $rpcClientConfig
@@ -78,15 +78,16 @@ class RpcClientImpl implements RpcClientInterface
                 'serverName' => $serverName
             ]
         ]));
-        return $res->getData();
+        return $res->getData() ?? [];
     }
 
     public function sendRequest(RequestDataMsg $requestData): ResponseDataMsg
     {
         // TODO: Implement sendRequest() method.
         $this->reConnect();
-        $this->client->send($requestData->toJson());
-        $msg = $this->client->recv();
+        self::$client->send($requestData->toJson());
+        $msg = self::$client->recv();
+        echo('dnsMsg['.$msg.']');
         $data = json_decode($msg, true);
         return new ResponseDataMsg($data ?? []);
     }
@@ -96,10 +97,26 @@ class RpcClientImpl implements RpcClientInterface
      */
     public function start()
     {
-        $this->client = new \Swoole\Client(SWOOLE_TCP | SWOOLE_KEEP);
+        self::$client = new \Swoole\Client(SWOOLE_TCP | SWOOLE_KEEP);
 
         $this->connect();
         $this->register();
+    }
+
+    /**
+     * 启动心跳包
+     */
+    public function startBeat(){
+        if ( self::$client->isConnected()){
+            // 启动定时心跳
+            GoTimer::start($this->rpcClientConfig->getTcpUpTime() , function(array $param = []){
+                echo 'send rect';
+                $param['client']->send((new RequestDataMsg([
+                    'eventName' => 'beat',
+                    'data' => []
+                ]))->toJson());
+            } , ['client' => self::$client]);
+        }
     }
 
     /**
@@ -107,7 +124,7 @@ class RpcClientImpl implements RpcClientInterface
      */
     private function reConnect()
     {
-        if (!$this->client->isConnected()) {
+        if (!self::$client->isConnected()) {
             //clear last timer
             $this->connect();
         }
@@ -116,17 +133,8 @@ class RpcClientImpl implements RpcClientInterface
     private function connect()
     {
         $serverAddress = $this->rpcClientConfig->getServerAddress();
-        $this->client->connect($serverAddress->getIp(), $serverAddress->getPort(), self::MAX_TIMEOUT);
-        if ( $this->client->isConnected()){
-            // 启动定时心跳
-            GoTimer::start($this->rpcClientConfig->getTcpUpTime() , function(array $param = []){
-                echo 'send rect';
-                $param['client']->send((new RequestDataMsg([
-                    'eventName' => 'beat',
-                    'data' => []
-                ]))->toJson());
-            } , ['client' => $this->client]);
-        }
+        self::$client->connect($serverAddress->getIp(), $serverAddress->getPort(), self::MAX_TIMEOUT);
+
     }
 
 }
