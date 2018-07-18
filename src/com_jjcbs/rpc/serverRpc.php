@@ -8,11 +8,16 @@
 
 // server rpc test
 require '../../../vendor/autoload.php';
+$cpuNum = \swoole_cpu_num();
 $serverConfig = new \com_jjcbs\rpc\bean\RpcServerConfig();
 $serverConfig->setIsDaemon(false);
 $serverConfig->setMaxServerMapSize(2048);
 $serverConfig->setListen('0.0.0.0');
 $serverConfig->setPort(8881);
+$serverConfig->setReactorNum($cpuNum * 2);
+$serverConfig->setWorkerNum($cpuNum * 2 * 2);
+$serverConfig->setHeartbeatCheckInterval(30);
+$serverConfig->setHeartbeatIdleTime(60);
 $server = new \com_jjcbs\rpc\lib\RpcServerImpl();
 $server->setConfig($serverConfig);
 try{

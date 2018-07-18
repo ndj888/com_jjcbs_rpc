@@ -14,8 +14,6 @@ use com_jjcbs\rpc\bean\msg\RequestDataMsg;
 use com_jjcbs\rpc\bean\msg\ResponseDataMsg;
 use com_jjcbs\rpc\bean\RpcClientConfig;
 use com_jjcbs\rpc\bean\ServerInfo;
-use com_jjcbs\rpc\interfaces\RequestData;
-use com_jjcbs\rpc\interfaces\ResponseData;
 use com_jjcbs\rpc\interfaces\RpcClientInterface;
 
 class RpcClientImpl implements RpcClientInterface
@@ -58,7 +56,7 @@ class RpcClientImpl implements RpcClientInterface
             'eventName' => 'register',
             'data' => $d
         ]);
-        $res= $this->sendRequest($data);
+        $res = $this->sendRequest($data);
         if ($res->getResult() == 1) {
             echo $this->rpcClientConfig->getServerName() . '------------------------注册成功';
             return true;
@@ -110,6 +108,7 @@ class RpcClientImpl implements RpcClientInterface
     private function reConnect()
     {
         if (!$this->client->isConnected()) {
+            //clear last timer
             $this->connect();
         }
     }
@@ -118,6 +117,16 @@ class RpcClientImpl implements RpcClientInterface
     {
         $serverAddress = $this->rpcClientConfig->getServerAddress();
         $this->client->connect($serverAddress->getIp(), $serverAddress->getPort(), self::MAX_TIMEOUT);
+        if ( $this->client->isConnected()){
+            // 启动定时心跳
+            GoTimer::start($this->rpcClientConfig->getTcpUpTime() , function(array $param = []){
+                echo 'send rect';
+                $param['client']->send((new RequestDataMsg([
+                    'eventName' => 'beat',
+                    'data' => []
+                ]))->toJson());
+            } , ['client' => $this->client]);
+        }
     }
 
 }

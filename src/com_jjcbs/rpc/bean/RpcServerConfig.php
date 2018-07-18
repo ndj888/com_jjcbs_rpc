@@ -29,6 +29,24 @@ class RpcServerConfig extends SimpleRpc
      * @var bool
      */
     protected $isDaemon = false;
+    protected $reactorNum = 2;
+    protected $workerNum = 4;
+    protected $maxRequest = 0;
+    /**
+     * 最大处理连接数
+     * @var int 
+     */
+    protected $maxCoon = 1000;
+    /**
+     * 轮询tcp时间
+     * @var int
+     */
+    protected $heartbeat_check_interval = 30;
+    /**
+     * tcp 连接闲置时间 超过这个没有回应的连接会被回收
+     * @var int
+     */
+    protected $heartbeat_idle_time = 60;
 
     /**
      * @return int
@@ -92,6 +110,102 @@ class RpcServerConfig extends SimpleRpc
     public function setIsDaemon(bool $isDaemon): void
     {
         $this->isDaemon = $isDaemon;
+    }
+
+    /**
+     * @return int
+     */
+    public function getReactorNum(): int
+    {
+        return $this->reactorNum;
+    }
+
+    /**
+     * @param int $reactorNum
+     */
+    public function setReactorNum(int $reactorNum): void
+    {
+        $this->reactorNum = $reactorNum;
+    }
+
+    /**
+     * @return int
+     */
+    public function getWorkerNum(): int
+    {
+        return $this->workerNum;
+    }
+
+    /**
+     * @param int $workerNum
+     */
+    public function setWorkerNum(int $workerNum): void
+    {
+        $this->workerNum = $workerNum;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMaxRequest(): int
+    {
+        return $this->maxRequest;
+    }
+
+    /**
+     * @param int $maxRequest
+     */
+    public function setMaxRequest(int $maxRequest): void
+    {
+        $this->maxRequest = $maxRequest;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMaxCoon(): int
+    {
+        return $this->maxCoon;
+    }
+
+    /**
+     * @param int $maxCoon
+     */
+    public function setMaxCoon(int $maxCoon): void
+    {
+        $this->maxCoon = $maxCoon;
+    }
+
+    /**
+     * @return int
+     */
+    public function getHeartbeatCheckInterval(): int
+    {
+        return $this->heartbeat_check_interval;
+    }
+
+    /**
+     * @param int $heartbeat_check_interval
+     */
+    public function setHeartbeatCheckInterval(int $heartbeat_check_interval): void
+    {
+        $this->heartbeat_check_interval = $heartbeat_check_interval;
+    }
+
+    /**
+     * @return int
+     */
+    public function getHeartbeatIdleTime(): int
+    {
+        return $this->heartbeat_idle_time;
+    }
+
+    /**
+     * @param int $heartbeat_idle_time
+     */
+    public function setHeartbeatIdleTime(int $heartbeat_idle_time): void
+    {
+        $this->heartbeat_idle_time = $heartbeat_idle_time;
     }
 
 

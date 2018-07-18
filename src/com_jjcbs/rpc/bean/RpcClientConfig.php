@@ -25,6 +25,11 @@ class RpcClientConfig extends SimpleRpc
     protected $listen = '0.0.0.0';
     protected $port = 8088;
     protected $serverName = '';
+    /**
+     * 定时汇报心跳时间 s
+     * @var int
+     */
+    protected $tcpUpTime = 30;
 
     /**
      * @return Ipv4Address
@@ -88,6 +93,22 @@ class RpcClientConfig extends SimpleRpc
     public function setServerName(string $serverName): void
     {
         $this->serverName = $serverName;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTcpUpTime(): int
+    {
+        return $this->tcpUpTime;
+    }
+
+    /**
+     * @param int $tcpUpTime
+     */
+    public function setTcpUpTime(int $tcpUpTime): void
+    {
+        $this->tcpUpTime = $tcpUpTime;
     }
 
 
