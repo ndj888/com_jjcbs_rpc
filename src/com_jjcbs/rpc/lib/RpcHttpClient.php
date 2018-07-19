@@ -63,13 +63,18 @@ abstract class RpcHttpClient extends Service
         ];
         try {
             $req = $this->httpClient->request($request->getMethod(), $fullUrl, $requestData);
-            $res = $req->getBody()->getContents();
-            return new ServiceResponseBean(\json_decode($res, true));
+            $res = json_decode($req->getBody()->getContents() , true);
+            return new ServiceResponseBean($res ?? []);
         } catch (\Exception $e) {
             $error = 'request api error' . $e->getMessage();
 //            echo $error;
             Log::error($error);
 //            return $error;
+            return new ServiceResponseBean([
+                'code' => 100,
+                'result' => 0,
+                'msg' => $error
+            ]);
         }
 
     }
