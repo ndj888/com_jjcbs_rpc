@@ -59,7 +59,7 @@ abstract class RpcHttpClient extends Service
     {
         $requestData = [
             'headers' => $request->getHeader(),
-            'data' => $request->getBody()
+            'body' => $request->getBody()
         ];
         try {
             $req = $this->httpClient->request($request->getMethod(), $fullUrl, $requestData);
