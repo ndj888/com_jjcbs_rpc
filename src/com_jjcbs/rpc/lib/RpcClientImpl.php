@@ -72,13 +72,18 @@ class RpcClientImpl implements RpcClientInterface
     public function dnsNameParse(string $serverName): array
     {
         // TODO: Implement dnsNameParse() method.
-        $res = $this->sendRequest(new RequestDataMsg([
-            'eventName' => 'selectDns',
-            'data' => [
-                'serverName' => $serverName
-            ]
-        ]));
-        return $res->getData() ?? [];
+        try{
+            $res = $this->sendRequest(new RequestDataMsg([
+                'eventName' => 'selectDns',
+                'data' => [
+                    'serverName' => $serverName
+                ]
+            ]));
+            return $res->getData();
+        }catch (\Exception $e){
+            echo $e->getMessage();
+        }
+        return [];
     }
 
     public function sendRequest(RequestDataMsg $requestData): ResponseDataMsg
