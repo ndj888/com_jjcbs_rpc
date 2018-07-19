@@ -114,7 +114,7 @@ class RpcServerImpl implements RpcServerInterface
                         $body = new ServerInfo($raw->getData());
                         $serverKey = $body->getServerName() . $fd;
                         $this->unRegister($this->getServerTableData($serverKey) , $fd);
-                        $serv->send(ResponseMessage::succeed('unRegister' , [] , 'unregister succeed')->toJson());
+                        $serv->send($fd , ResponseMessage::succeed('unRegister' , [] , 'unregister succeed')->toJson());
                         break;
                     /**
                      * DNS 查询

@@ -34,7 +34,9 @@ class RpcDns extends Service
     }
 
     public function parseDns(string $serverName) : ServerInfo{
-        return new ServerInfo($this->client->dnsNameParse($serverName));
+        $arr = $this->client->dnsNameParse($serverName);
+        if ( empty($arr)) throw new \Exception('dns parase error');
+        return new ServerInfo($arr);
     }
 
 }
