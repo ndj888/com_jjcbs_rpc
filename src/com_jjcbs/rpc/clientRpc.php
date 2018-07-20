@@ -23,14 +23,17 @@ $clientRpc->setRpcClientConfig($clientConfig);
 $clientRpc->start();
 
 
+//$clientRpc->getResource(function(\com_jjcbs\rpc\bean\msg\ResponseDataMsg $responseDataMsg){
+//    echo $responseDataMsg->toJson();
+//});
 //usleep(500);
 $dnsInfo = $clientRpc->dnsNameParse('testApp');
-//var_dump($dnsInfo);
-//exit(0);
+var_dump($dnsInfo);
+exit(0);
 
-while (true){
-    usleep(500);
-}
+//while (true){
+//    usleep(500);
+//}
 
 //$res = \com_jjcbs\rpc\fun\api\TestApiFun::test($clientRpc , new \com_jjcbs\rpc\bean\msg\RequestRpcBean([
 //    'method' => 'POST'
