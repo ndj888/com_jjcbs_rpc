@@ -89,7 +89,6 @@ class RpcServerImpl implements RpcServerInterface
                 if (!Tool::is_json($data)) throw new \Exception('error data input');
                 echo 'input : ' . $data . "\n";
                 $raw = new RequestDataMsg(\json_decode($data, true));
-                var_dump($raw);
                 switch ($raw->getEventName()) {
                     case 'register':
                         $index = $fd;
