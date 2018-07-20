@@ -19,7 +19,7 @@ use com_jjcbs\lib\SimpleRpc;
 class RequestRpcBean extends SimpleRpc
 {
     protected $header = [];
-    protected $body = [];
+    protected $body;
     protected $method = 'GET';
 
     /**
@@ -39,20 +39,22 @@ class RequestRpcBean extends SimpleRpc
     }
 
     /**
-     * @return array
+     * @return mixed
      */
-    public function getBody(): array
+    public function getBody()
     {
         return $this->body;
     }
 
     /**
-     * @param array $body
+     * @param mixed $body
      */
-    public function setBody(array $body): void
+    public function setBody($body): void
     {
         $this->body = $body;
     }
+
+
 
     /**
      * @return string
