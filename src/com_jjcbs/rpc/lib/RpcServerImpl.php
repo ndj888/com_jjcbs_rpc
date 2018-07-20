@@ -118,7 +118,6 @@ class RpcServerImpl implements RpcServerInterface
                      * DNS 查询
                      */
                     case 'selectDns' :
-                        echo 'selectDns input[' . $raw->toJson() . ']';
                         $sn = $raw->getData()['serverName'];
                         $arr = $this->getServerNameIndexArr($sn);
                         $data = $this->getServerTableData($sn . $this->dnsSelect($arr));
