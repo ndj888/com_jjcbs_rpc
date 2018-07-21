@@ -120,6 +120,7 @@ class RpcClientImpl implements RpcClientInterface
                     'eventName' => 'beat',
                     'data' => []
                 ]))->toJson());
+                self::$client->recv();
             } , ['client' => self::$client]);
         }
     }
