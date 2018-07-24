@@ -1,5 +1,5 @@
 {
-    "name": "ndj888/rpc",
+    "name": "ndj888/com_jjcbs_rpc",
     "description": "rpc swoole laravel",
     "keywords": ["rpc","com_jjcbs"],
     "type": "library",
