@@ -89,10 +89,14 @@ class RpcClientImpl implements RpcClientInterface
     public function sendRequest(RequestDataMsg $requestData): ResponseDataMsg
     {
         // TODO: Implement sendRequest() method.
-        $this->reConnect();
         self::$client->send($requestData->toJson());
         $msg = self::$client->recv();
-        echo('dnsMsg['.$msg.']');
+        if ( $msg == false){
+            // 状态不可用 重连
+            self::$client->close();
+            $this->reConnect();
+            return $this->sendRequest($requestData);
+        }
         $data = json_decode($msg, true);
         return new ResponseDataMsg($data ?? []);
     }
@@ -114,14 +118,13 @@ class RpcClientImpl implements RpcClientInterface
     public function startBeat(){
         if ( self::$client->isConnected()){
             // 启动定时心跳
-            GoTimer::start($this->rpcClientConfig->getTcpUpTime() , function(array $param = []){
+            GoTimer::start($this->rpcClientConfig->getTcpUpTime() , function(){
                 echo 'send rect';
-                $param['client']->send((new RequestDataMsg([
+                $this->sendRequest(new RequestDataMsg([
                     'eventName' => 'beat',
                     'data' => []
-                ]))->toJson());
-                self::$client->recv();
-            } , ['client' => self::$client]);
+                ]));
+            });
         }
     }
 
@@ -130,10 +133,7 @@ class RpcClientImpl implements RpcClientInterface
      */
     private function reConnect()
     {
-        if (!self::$client->isConnected()) {
-            //clear last timer
-            $this->connect();
-        }
+        $this->connect();
     }
 
     private function connect()
