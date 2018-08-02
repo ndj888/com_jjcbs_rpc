@@ -92,8 +92,6 @@ class RpcClientImpl implements RpcClientInterface
         self::$client->send($requestData->toJson());
         $msg = self::$client->recv();
         if ( $msg == false){
-            // 状态不可用 重连
-            self::$client->close();
             $this->reConnect();
             return $this->sendRequest($requestData);
         }
@@ -133,7 +131,11 @@ class RpcClientImpl implements RpcClientInterface
      */
     private function reConnect()
     {
+        // 状态不可用 重连
+        self::$client->close();
         $this->connect();
+        //register
+        $this->register();
     }
 
     private function connect()
