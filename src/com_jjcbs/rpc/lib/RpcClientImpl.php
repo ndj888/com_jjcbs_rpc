@@ -100,6 +100,15 @@ class RpcClientImpl implements RpcClientInterface
     }
 
     /**
+     * 发送心跳包
+     */
+    public function sendRect(){
+        self::$client->send((new RequestDataMsg([
+            'eventName' => 'beat',
+            'data' => []
+        ]))->toJson());
+    }
+    /**
      * 启动服务
      */
     public function start()
