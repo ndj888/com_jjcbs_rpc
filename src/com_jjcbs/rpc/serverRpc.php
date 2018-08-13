@@ -17,7 +17,7 @@ $serverConfig->setPort(8881);
 $serverConfig->setReactorNum($cpuNum * 2);
 $serverConfig->setWorkerNum($cpuNum * 2 * 2);
 $serverConfig->setHeartbeatCheckInterval(30);
-$serverConfig->setHeartbeatIdleTime(60);
+$serverConfig->setHeartbeatIdleTime(600);
 $server = new \com_jjcbs\rpc\lib\RpcServerImpl();
 $server->setConfig($serverConfig);
 try{
