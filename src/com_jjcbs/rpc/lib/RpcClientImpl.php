@@ -127,10 +127,7 @@ class RpcClientImpl implements RpcClientInterface
             // 启动定时心跳
             GoTimer::start($this->rpcClientConfig->getTcpUpTime() , function(){
                 echo 'send rect';
-                self::$client->send((new RequestDataMsg([
-                    'eventName' => 'beat',
-                    'data' => []
-                ]))->toJson());
+                $this->sendRect();
             });
         }
     }
