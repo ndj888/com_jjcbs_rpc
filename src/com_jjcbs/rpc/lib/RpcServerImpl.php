@@ -125,7 +125,7 @@ class RpcServerImpl implements RpcServerInterface
                         break;
                     case 'beat':
                         // 心跳包
-//                        $serv->send($fd , ResponseMessage::succeed('beat' , [] , 'succeed')->toJson());
+                        $serv->send($fd, ResponseMessage::succeed('beat', [], 'succeed')->toJson());
                         break;
                     default:
                         $serv->send($fd, ResponseMessage::error('noNone', 'not found')->toJson());

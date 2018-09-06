@@ -72,7 +72,7 @@ class RpcClientImpl implements RpcClientInterface
     public function dnsNameParse(string $serverName): array
     {
         // TODO: Implement dnsNameParse() method.
-        try{
+        try {
             $res = $this->sendRequest(new RequestDataMsg([
                 'eventName' => 'selectDns',
                 'data' => [
@@ -80,7 +80,7 @@ class RpcClientImpl implements RpcClientInterface
                 ]
             ]));
             return $res->getData();
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             echo $e->getMessage();
         }
         return [];
@@ -91,7 +91,7 @@ class RpcClientImpl implements RpcClientInterface
         // TODO: Implement sendRequest() method.
         self::$client->send($requestData->toJson());
         $msg = self::$client->recv();
-        if ( $msg == false){
+        if ($msg == false) {
             $this->reConnect();
             return $this->sendRequest($requestData);
         }
@@ -102,12 +102,14 @@ class RpcClientImpl implements RpcClientInterface
     /**
      * 发送心跳包
      */
-    public function sendRect(){
-        self::$client->send((new RequestDataMsg([
+    public function sendRect()
+    {
+        $this->sendRequest((new RequestDataMsg([
             'eventName' => 'beat',
             'data' => []
-        ]))->toJson());
+        ])));
     }
+
     /**
      * 启动服务
      */
@@ -122,10 +124,11 @@ class RpcClientImpl implements RpcClientInterface
     /**
      * 启动心跳包
      */
-    public function startBeat(){
-        if ( self::$client->isConnected()){
+    public function startBeat()
+    {
+        if (self::$client->isConnected()) {
             // 启动定时心跳
-            GoTimer::start(self::$rpcClientConfig->getTcpUpTime() , function(){
+            GoTimer::start(self::$rpcClientConfig->getTcpUpTime(), function () {
                 echo 'send rect';
                 $this->sendRect();
             });
