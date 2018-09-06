@@ -25,7 +25,7 @@ class RpcClientImpl implements RpcClientInterface
     /**
      * @var RpcClientConfig
      */
-    protected $rpcClientConfig;
+    protected static $rpcClientConfig;
     /**
      * @var \swoole_client
      */
@@ -34,9 +34,9 @@ class RpcClientImpl implements RpcClientInterface
     /**
      * @param RpcClientConfig $rpcClientConfig
      */
-    public function setRpcClientConfig(RpcClientConfig $rpcClientConfig): void
+    public static function setRpcClientConfig(RpcClientConfig $rpcClientConfig): void
     {
-        $this->rpcClientConfig = $rpcClientConfig;
+        self::$rpcClientConfig = $rpcClientConfig;
     }
 
 
@@ -45,10 +45,10 @@ class RpcClientImpl implements RpcClientInterface
         // TODO: Implement register() method.
 
         $serverInfo = new ServerInfo();
-        $serverInfo->setServerName($this->rpcClientConfig->getServerName());
+        $serverInfo->setServerName(self::$rpcClientConfig->getServerName());
         $serverInfo->setAddress(new Ipv4Address([
-            'ip' => $this->rpcClientConfig->getListen(),
-            'port' => $this->rpcClientConfig->getPort()
+            'ip' => self::$rpcClientConfig->getListen(),
+            'port' => self::$rpcClientConfig->getPort()
         ]));
         $d = $serverInfo->toArray();
         $d['address'] = $serverInfo->getAddress()->toArray();
@@ -58,7 +58,7 @@ class RpcClientImpl implements RpcClientInterface
         ]);
         $res = $this->sendRequest($data);
         if ($res->getResult() == 1) {
-            echo $this->rpcClientConfig->getServerName() . '------------------------注册成功';
+            echo self::$rpcClientConfig->getServerName() . '------------------------注册成功';
             return true;
         }
         return false;
@@ -125,7 +125,7 @@ class RpcClientImpl implements RpcClientInterface
     public function startBeat(){
         if ( self::$client->isConnected()){
             // 启动定时心跳
-            GoTimer::start($this->rpcClientConfig->getTcpUpTime() , function(){
+            GoTimer::start(self::$rpcClientConfig->getTcpUpTime() , function(){
                 echo 'send rect';
                 $this->sendRect();
             });
@@ -146,7 +146,7 @@ class RpcClientImpl implements RpcClientInterface
 
     private function connect()
     {
-        $serverAddress = $this->rpcClientConfig->getServerAddress();
+        $serverAddress = self::$rpcClientConfig->getServerAddress();
         self::$client->connect($serverAddress->getIp(), $serverAddress->getPort(), self::MAX_TIMEOUT);
 
     }
