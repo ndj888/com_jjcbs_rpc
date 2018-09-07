@@ -55,7 +55,6 @@ class ServerInfo extends SimpleRpc
      */
     public function getAddress(): Ipv4Address
     {
-        if ( is_array($this->address)) $this->address = new Ipv4Address($this->address);
         return $this->address;
     }
 

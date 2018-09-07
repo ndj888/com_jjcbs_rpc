@@ -7,8 +7,9 @@
  */
 
 namespace com_jjcbs\rpc\lib;
+
 use com_jjcbs\lib\Service;
-use com_jjcbs\rpc\bean\msg\ResponseDataMsg;
+use com_jjcbs\rpc\bean\Ipv4Address;
 use com_jjcbs\rpc\bean\ServerInfo;
 
 /**
@@ -23,6 +24,7 @@ class RpcDns extends Service
      * @var RpcClientImpl
      */
     private $client = null;
+
     public function __construct($client)
     {
         $this->client = $client;
@@ -33,9 +35,11 @@ class RpcDns extends Service
         // TODO: Implement exec() method.
     }
 
-    public function parseDns(string $serverName) : ServerInfo{
+    public function parseDns(string $serverName): ServerInfo
+    {
         $arr = $this->client->dnsNameParse($serverName);
-        if ( empty($arr)) throw new \Exception('dns parase error');
+        if (empty($arr)) throw new \Exception('dns parase error');
+        $arr['address'] = new Ipv4Address($arr['address'] ?? []);
         return new ServerInfo($arr);
     }
 
