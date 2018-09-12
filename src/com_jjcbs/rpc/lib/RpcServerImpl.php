@@ -94,6 +94,7 @@ class RpcServerImpl implements RpcServerInterface
                         $index = $fd;
                         $tempArr = $raw->getData();
                         $tempArr['fd'] = $index;
+                        $tempArr['address'] = new Ipv4Address($tempArr['address']);
                         $body = new ServerInfo($tempArr);
 
                         $this->serverNameIndexArrPush($body->getServerName(), $index);

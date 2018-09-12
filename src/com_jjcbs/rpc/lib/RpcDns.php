@@ -23,11 +23,11 @@ class RpcDns extends Service
      * Dns tcp client
      * @var RpcClientImpl
      */
-    private $client = null;
+    private static $client = null;
 
     public function __construct($client)
     {
-        $this->client = $client;
+        self::$client = $client;
     }
 
     public function exec()
@@ -37,7 +37,7 @@ class RpcDns extends Service
 
     public function parseDns(string $serverName): ServerInfo
     {
-        $arr = $this->client->dnsNameParse($serverName);
+        $arr = self::$client->dnsNameParse($serverName);
         if (empty($arr)) throw new \Exception('dns parase error');
         $arr['address'] = new Ipv4Address($arr['address'] ?? []);
         return new ServerInfo($arr);

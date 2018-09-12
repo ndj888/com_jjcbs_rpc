@@ -18,7 +18,13 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/guzzle/guzzle/zipball/407b0cb880ace85c9b63c5f9551db498cb2d50ba",
                 "reference": "407b0cb880ace85c9b63c5f9551db498cb2d50ba",
-                "shasum": ""
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
             },
             "require": {
                 "guzzlehttp/promises": "^1.0",
@@ -83,7 +89,13 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/guzzle/promises/zipball/a59da6cf61d80060647ff4d3eb2c03a2bc694646",
                 "reference": "a59da6cf61d80060647ff4d3eb2c03a2bc694646",
-                "shasum": ""
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
             },
             "require": {
                 "php": ">=5.5.0"
@@ -134,7 +146,13 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/guzzle/psr7/zipball/f5b8a8512e2b58b0071a7280e39f14f72e05d87c",
                 "reference": "f5b8a8512e2b58b0071a7280e39f14f72e05d87c",
-                "shasum": ""
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
             },
             "require": {
                 "php": ">=5.4.0",
@@ -189,17 +207,23 @@
         },
         {
             "name": "ndj888/com_jjcbs_tool",
-            "version": "v1.15",
+            "version": "v1.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ndj888/com_jjcbs_tool.git",
-                "reference": "00d026e42951641168a162690be237ceef034e92"
+                "reference": "6c86980182d93ce66df45768fa7864b5df32e63d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ndj888/com_jjcbs_tool/zipball/00d026e42951641168a162690be237ceef034e92",
-                "reference": "00d026e42951641168a162690be237ceef034e92",
-                "shasum": ""
+                "url": "https://api.github.com/repos/ndj888/com_jjcbs_tool/zipball/6c86980182d93ce66df45768fa7864b5df32e63d",
+                "reference": "6c86980182d93ce66df45768fa7864b5df32e63d",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
             },
             "require": {
                 "php": "^7.0"
@@ -231,7 +255,7 @@
                 "com_jjcbs",
                 "mytool"
             ],
-            "time": "2017-12-02T04:18:45+00:00"
+            "time": "2018-09-07T07:10:34+00:00"
         },
         {
             "name": "psr/http-message",
@@ -245,7 +269,13 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/php-fig/http-message/zipball/f6561bf28d520154e4b0ec72be95418abe6d9363",
                 "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363",
-                "shasum": ""
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
             },
             "require": {
                 "php": ">=5.3.0"
