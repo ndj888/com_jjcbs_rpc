@@ -122,6 +122,7 @@ class RpcServerImpl implements RpcServerInterface
                         $sn = $raw->getData()['serverName'];
                         $arr = $this->getServerNameIndexArr($sn);
                         $data = $this->getServerTableData($sn . $this->dnsSelect($arr));
+                        var_export($data);
                         $serv->send($fd, ResponseMessage::succeed('selectDns', $data->toArray())->toJson());
                         break;
                     case 'beat':

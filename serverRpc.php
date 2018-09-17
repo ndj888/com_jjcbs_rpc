@@ -7,7 +7,8 @@
  */
 
 // server rpc test
-require '../../../vendor/autoload.php';
+define('ROOT_DIR',dirname(__FILE__));
+require ROOT_DIR . '/vendor/autoload.php';
 $cpuNum = \swoole_cpu_num();
 $serverConfig = new \com_jjcbs\rpc\bean\RpcServerConfig();
 $serverConfig->setIsDaemon(false);
@@ -20,12 +21,12 @@ $serverConfig->setHeartbeatCheckInterval(30);
 $serverConfig->setHeartbeatIdleTime(600);
 $server = new \com_jjcbs\rpc\lib\RpcServerImpl();
 $server->setConfig($serverConfig);
-try{
+try {
     echo '服务管理-------启动';
     echo "\n listen {$serverConfig->getListen()}";
     echo "\n port {$serverConfig->getPort()}";
     $server->serverStart();
-}catch (Exception $exception){
+} catch (Exception $exception) {
     echo $exception->getMessage();
 }
 exit(1);
