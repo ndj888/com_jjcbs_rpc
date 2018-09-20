@@ -7,7 +7,8 @@
  */
 
 // server rpc test
-require '../../../vendor/autoload.php';
+define('ROOT_DIR',dirname(__FILE__));
+require ROOT_DIR . '/vendor/autoload.php';
 
 $clientConfig = new \com_jjcbs\rpc\bean\RpcClientConfig();
 $clientConfig->setPort(8884);
