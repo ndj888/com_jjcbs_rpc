@@ -104,10 +104,10 @@ class RpcClientImpl implements RpcClientInterface
      */
     public function sendRect()
     {
-        $this->sendRequest((new RequestDataMsg([
+        self::$client->send((new RequestDataMsg([
             'eventName' => 'beat',
             'data' => []
-        ])));
+        ]))->toJson());
     }
 
     /**
